@@ -2,12 +2,12 @@
 <html lang="he" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/neglect-therapy/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="אפליקציה לתרגול סריקה מרחבית עבור מטופלים עם נגלקט מרחבי" />
-    <link rel="manifest" href="/neglect-therapy/manifest.json" />
-    <link rel="apple-touch-icon" href="/neglect-therapy/icons/icon-192x192.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="סריקה מרחבית" />
@@ -34,6 +34,7 @@
         justify-content: center;
         align-items: center;
         touch-action: none;
+        background-color: #ffffff;
       }
       #root {
         width: 100%;
@@ -46,10 +47,27 @@
           font-size: 14px;
         }
       }
+      .error-message {
+        display: none;
+        padding: 20px;
+        text-align: center;
+        color: red;
+      }
     </style>
     <script type="module" crossorigin src="/neglect-therapy/assets/index-BQAmgHNH.js"></script>
   <link rel="manifest" href="/neglect-therapy/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/neglect-therapy/registerSW.js"></script></head>
   <body>
     <div id="root"></div>
+    <div id="error-message" class="error-message"></div>
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('Runtime error:', e);
+        const errorDiv = document.getElementById('error-message');
+        if (errorDiv) {
+          errorDiv.style.display = 'block';
+          errorDiv.textContent = 'שגיאה בטעינת האפליקציה. אנא רענן את הדף.';
+        }
+      });
+    </script>
   </body>
 </html> 
