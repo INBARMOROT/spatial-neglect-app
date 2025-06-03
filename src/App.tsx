@@ -17,28 +17,32 @@ interface PointPair {
 }
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  background-color: #f8f9fa;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  
+  @media screen and (max-width: 768px) {
+    padding: 0.5rem;
+  }
 `;
 
-const Dot = styled.div<{ $x: number; $y: number; $isFirst: boolean }>`
+const Dot = styled.div<{ $x: number; $y: number }>`
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: min(40px, 10vw);
+  height: min(40px, 10vw);
   border-radius: 50%;
-  background: ${props => props.$isFirst ? '#e74c3c' : '#2ecc71'};
+  background-color: red;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
   left: ${props => props.$x}px;
   top: ${props => props.$y}px;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background: ${props => props.$isFirst ? 
-    'radial-gradient(circle at 30% 30%, #ff6b6b, #e74c3c)' : 
-    'radial-gradient(circle at 30% 30%, #7bed9f, #2ecc71)'};
-  z-index: 1000;
+  touch-action: none;
 `;
 
 const Line = styled.div<{ $start: { x: number; y: number }; $end: { x: number; y: number } }>`
@@ -83,25 +87,39 @@ const Stats = styled.div`
   z-index: 1001;
 `;
 
+const ResultsContainer = styled.div`
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 90vw;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: 1rem;
+  font-size: clamp(14px, 3vw, 16px);
+`;
+
 const AdBanner = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: min(60px, 15vh);
   background: #ddd;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 998;
+  padding: 0.5rem;
 `;
 
 const RestartButton = styled.button`
   background: #3498db;
   color: white;
   font-family: 'Rubik', sans-serif;
-  font-size: 1.2rem;
-  padding: 0.8rem 2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  padding: clamp(0.5rem, 2vw, 0.8rem) clamp(1rem, 4vw, 2rem);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -125,8 +143,10 @@ const App: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
 
   const generateRandomPosition = useCallback(() => {
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * (window.innerHeight - 80); // Avoid banner area
+    const maxWidth = Math.min(window.innerWidth - 40, window.innerWidth * 0.9);
+    const maxHeight = Math.min(window.innerHeight - 80, window.innerHeight * 0.9);
+    const x = 20 + Math.random() * (maxWidth - 40);
+    const y = 20 + Math.random() * (maxHeight - 40);
     return { x, y, timestamp: Date.now() };
   }, []);
 
@@ -193,7 +213,6 @@ const App: React.FC = () => {
         <Dot
           $x={firstDot.x}
           $y={firstDot.y}
-          $isFirst={true}
           onClick={() => handleDotClick(true)}
         />
       )}
@@ -204,7 +223,6 @@ const App: React.FC = () => {
           <Dot
             $x={secondDot.x}
             $y={secondDot.y}
-            $isFirst={false}
             onClick={() => handleDotClick(false)}
           />
         </>

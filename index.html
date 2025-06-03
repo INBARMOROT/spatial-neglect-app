@@ -2,12 +2,12 @@
 <html lang="he" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/icons/icon-192x192.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/neglect-therapy/icons/icon-192x192.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="אפליקציה לתרגול סריקה מרחבית עבור מטופלים עם נגלקט מרחבי" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <link rel="manifest" href="/neglect-therapy/manifest.json" />
+    <link rel="apple-touch-icon" href="/neglect-therapy/icons/icon-192x192.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="סריקה מרחבית" />
@@ -20,31 +20,30 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        -webkit-text-size-adjust: 100%;
       }
       html, body {
         width: 100%;
         height: 100%;
         overflow: hidden;
+        position: fixed;
       }
       body {
         font-family: 'Rubik', sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
+        touch-action: none;
       }
       #root {
         width: 100%;
         height: 100%;
+        overflow: hidden;
+        position: relative;
       }
-      @media screen and (orientation: portrait) {
-        body {
-          transform: rotate(-90deg);
-          transform-origin: left top;
-          width: 100vh;
-          height: 100vw;
-          position: absolute;
-          top: 100%;
-          left: 0;
+      @media screen and (max-width: 768px) {
+        html {
+          font-size: 14px;
         }
       }
     </style>
@@ -52,18 +51,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-              console.log('ServiceWorker registration successful');
-            })
-            .catch(err => {
-              console.log('ServiceWorker registration failed: ', err);
-            });
-        });
-      }
-    </script>
   </body>
 </html> 
