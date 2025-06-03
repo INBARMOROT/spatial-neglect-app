@@ -1,1 +1,1 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/spatial-neglect-therapy/sw.js', { scope: '/spatial-neglect-therapy/' })})}
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/spatial-neglect-app/sw.js', { scope: '/spatial-neglect-app/' })})}
